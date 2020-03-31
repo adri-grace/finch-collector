@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Nesting Traits</h1>
+{% for nest in object_list %}
+<div class="card">
+    <div class="card-content">
+        <p>Clutch size: {{ nest.clutch }}</p>
+        <p>Number of Broods: {{ nest.broods }}</p>
+        <p>Incubation time: {{ nest.incubation }}</p>
+    </div>
+    <div class="card-action">
+        <a href="{% url 'nests_update' nest.id %}">Edit</a>
+        <a href="{% url 'nests_delete' nest.id %}">Delete</a>
+    </div>
+</div>
+
+{% endfor %}
+{% endblock %}

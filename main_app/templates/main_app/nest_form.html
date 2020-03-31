@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if object %}
+<h1>Edit</h1>
+{% else %}
+<h1>Add Nesting Traits</h1>
+{% endif %}
+<form action="" method="POST">
+    {% csrf_token %}
+        {{ form }}
+    <input type="submit" value="Submit" class="btn">
+</form>
+{% endblock %}
