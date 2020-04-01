@@ -1,6 +1,12 @@
 from django.db import models
 from django.urls import reverse
 
+
+SEX = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('H', 'Hatchling')
+)
 # Create your models here.
 class Finch(models.Model):
     variety = models.CharField(max_length=100)
@@ -25,3 +31,16 @@ class Nest(models.Model):
         return self.clutch
     def get_absolute_url(self):
         return reverse('nests_index')
+
+class Siting(models.Model):
+    date =models.DateField('siting date')
+    sex = models.CharField(
+        max_length=1,
+        choices=SEX,
+        default=SEX[0][0]
+    )
+    finch = models.ForeignKey(Finch, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.sex} on {self.date}"
+    class Meta:
+        ordering = ['-date']
