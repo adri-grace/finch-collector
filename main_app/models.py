@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 
 
 SEX = (
@@ -23,10 +24,13 @@ class Finch(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'finch_id': self.id})
 
+    def seen_today(self):
+        return self.siting_set.filter(date=date.today()).count() >= 1
+
 class Nest(models.Model):
-    clutch = models.CharField(max_length=20)
-    broods = models.CharField(max_length=20)
-    incubation = models.CharField(max_length=20)
+    clutch = models.CharField(max_length=20, verbose_name='clutch size')
+    broods = models.CharField(max_length=20, verbose_name='number of broods')
+    incubation = models.CharField(max_length=20, verbose_name='incubation period')
     def __str__(self):
         return self.clutch
     def get_absolute_url(self):
