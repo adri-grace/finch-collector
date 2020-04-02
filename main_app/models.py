@@ -25,7 +25,7 @@ class Finch(models.Model):
         return reverse('detail', kwargs={'finch_id': self.id})
 
     def seen_today(self):
-        return self.siting_set.filter(date=date.today()).count() >= 1
+        return self.siting_set.filter(date=date.today()).count() <= 1
 
 class Nest(models.Model):
     clutch = models.CharField(max_length=20, verbose_name='clutch size')
