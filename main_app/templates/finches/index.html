@@ -4,18 +4,19 @@
 
 <h1>Finch Species</h1>
 {% for finch in finches %}
+
 <div class="card">
-    <a href="{% url 'detail' finch.id %}">
     <div class="card-content">
+        <a href="{% url 'detail' finch.id %}">
         <span class="card-title">{{ finch.variety }}</span>
-        <p>Color: {{ finch.color }}</p>
-        <p>Habitat: {{ finch.habitat }}</p>
-        <p>Food: {{ finch.food }}</p>
-        <p>Nesting: {{ finch.nesting }}</p>
-        <p>Behavior: {{ finch.behavior }}</p>
-        <p>Conservation: {{ finch.conservation }} </p>
-    </div>
     </a>
+        <p><strong>Color:</strong> {{ finch.color }}</p>
+        <p><strong>Habitat:</strong> {{ finch.habitat }}</p>
+        <p><strong>Food:</strong> {{ finch.food }}</p>
+        <p><strong>Nesting:</strong> {{ finch.nesting }}</p>
+        <p><strong>Behavior:</strong> {{ finch.behavior }}</p>
+        <p><strong>Conservation Concern:</strong> {{ finch.conservation }} </p>
+    </div>
 </div>
 
 {% endfor %}

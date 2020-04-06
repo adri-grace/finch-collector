@@ -9,6 +9,12 @@ SEX = (
     ('H', 'Hatchling')
 )
 # Create your models here.
+
+class Similar(models.Model):
+    variety = models.CharField(max_length=100)
+    color = models.CharField(max_length=100)
+    def __str__(self):
+        return self.variety
 class Finch(models.Model):
     variety = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
@@ -16,16 +22,19 @@ class Finch(models.Model):
     food = models.CharField(max_length=100)
     nesting = models.CharField(max_length=100)
     behavior = models.CharField(max_length=100)
-    conservation = models.CharField(max_length=100)
+    conservation = models.CharField(max_length=100, verbose_name='conservation concern')
+    similar = models.ManyToManyField(Similar)
 
     def __str__(self):
         return self.variety
+    class Meta:
+        ordering = ['variety']
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'finch_id': self.id})
 
     def seen_today(self):
-        return self.siting_set.filter(date=date.today()).count() <= 1
+        return self.siting_set.filter(date=date.today()).count() >= 1
 
 class Nest(models.Model):
     clutch = models.CharField(max_length=20, verbose_name='clutch size')

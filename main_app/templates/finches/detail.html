@@ -2,18 +2,18 @@
 
 {% block content %}
 
-<h1>Finch Species</h1>
+<h1>{{ finch.variety }} Details</h1>
 <div class="row">
     <div class="col s6">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">{{ finch.variety }}</span>
-                <p>Color: {{ finch.color }}</p>
-                <p>Habitat: {{ finch.habitat }}</p>
-                <p>Food: {{ finch.food }}</p>
-                <p>Nesting: {{ finch.nesting }}</p>
-                <p>Behavior: {{ finch.behavior }}</p>
-                <p>Conservation: {{ finch.conservation }} </p>
+                <p><strong>Color:</strong> {{ finch.color }}</p>
+                <p><strong>Habitat:</strong> {{ finch.habitat }}</p>
+                <p><strong>Food: </strong>{{ finch.food }}</p>
+                <p><strong>Nesting:</strong> {{ finch.nesting }}</p>
+                <p><strong>Behavior:</strong> {{ finch.behavior }}</p>
+                <p><strong>Conservation Concern:</strong> {{ finch.conservation }} </p>
             </div>
             <div class="card-action">
                 <a href="{% url 'finches_update' finch.id %}">Edit</a>
@@ -57,6 +57,52 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col s6">
+        <h3>Similar Species</h3>
+        {% if finch.similar.count %}
+        {% for similar in finch.similar.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ similar.variety }}</span>
+                <p><strong>Color:</strong> {{ similar.color }}</p>
+            </div>
+            <div class="card-action">
+                <form action="{% url 'disassoc_finch' finch.id similar.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn red">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5>No similar species listed yet.</h5>
+        {% endif %}
+    </div>
+    <div class="col s6">
+        <h3>Possible Similar Species</h3>
+        <a class="btn" href="{% url 'similar_create' %}">Add a possibility</a>
+        {% if similars.count %}
+        {% for similar in similars.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ similar.variety }}</span>
+                <p><strong>Color:</strong> {{ similar.color }}</p>
+            </div>
+            <div class="card-action">
+                <form action="{% url 'assoc_finch' finch.id similar.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn" value="Add">
+                    <a href="{% url 'similar_update' similar.id %}" class="btn">Edit</a>
+                <a href="{% url 'similar_delete' similar.id %}" class="btn">Delete</a>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
 </div>
 <script>
