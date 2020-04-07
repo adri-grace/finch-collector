@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from datetime import date
 
+from django.contrib.auth.models import User
+
 
 SEX = (
     ('M', 'Male'),
@@ -24,6 +26,7 @@ class Finch(models.Model):
     behavior = models.CharField(max_length=100)
     conservation = models.CharField(max_length=100, verbose_name='conservation concern')
     similar = models.ManyToManyField(Similar)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.variety
@@ -57,3 +60,9 @@ class Siting(models.Model):
         return f"{self.sex} on {self.date}"
     class Meta:
         ordering = ['-date']
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    finch = models.ForeignKey(Finch, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"Photo for finch_id: {self.finch_id} @{self.url}"

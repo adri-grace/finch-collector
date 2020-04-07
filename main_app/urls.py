@@ -17,6 +17,8 @@ urlpatterns = [
     path('similar/create/', views.SimilarCreate.as_view(), name="similar_create"),
     path('similar/<int:pk>/delete/', views.SimilarDelete.as_view(), name="similar_delete"),
     path('similar/<int:pk>/update/', views.SimilarUpdate.as_view(), name="similar_update"),
-    path('finches/<int:finch_id>/assoc_finch/<int:similar_id>/', views.assoc_finch, name='assoc_finch'),
-    path('finches/<int:finch_id>/disassoc_finch/<int:similar_id>/', views.disassoc_finch, name='disassoc_finch'),
+    path('finches/<int:finch_id>/assoc_finch/<int:similar_id>/', views.assoc_finch, name="assoc_finch"),
+    path('finches/<int:finch_id>/disassoc_finch/<int:similar_id>/', views.disassoc_finch, name="disassoc_finch"),
+    path('finches/<int:finch_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('accounts/signup/', views.signup, name="signup"),
 ]
